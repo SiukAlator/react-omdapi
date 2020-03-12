@@ -5,4 +5,4 @@ LABEL author="César Delgado" maintainer="cesar.delgado.arcos@gmail.com"
 COPY ./ .
 RUN npm install
 
-CMD ["node", "start"]
+CMD ["npm", "start"]
