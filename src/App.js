@@ -10,19 +10,18 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { rows: [<div>Welcome!</div>] }
+    this.state = {};
     // this.performSearch('Avengers');
-
+    this.setState({ rows: [<div>Welcome!</div>] });
 
   }
 
   reviewFavorites() {
     let arrayFavorite = localStorage.getItem('favorites');
-    let index = -1;
-    if (arrayFavorite != null && arrayFavorite != "") {
+    if (arrayFavorite !== null && arrayFavorite !== "") {
       arrayFavorite = JSON.parse(arrayFavorite);
       for (let i in arrayFavorite) {
-        $('#' + arrayFavorite[i] + '_img').attr("src", favoriteIMG);
+        $('#' + arrayFavorite[i].imdbID + '_img').attr("src", favoriteIMG);
       }
     }
   }
@@ -33,15 +32,27 @@ class App extends Component {
       url: urlApi,
       success: (searchResult) => {
         let movieRows = [];
-        console.log('OK!');
         const results = searchResult.Search;
-        console.log(results);
-        for (let i in results) {
-          let movie = <MovieFound movie={results[i]} />;
-          movieRows.push(movie);
+        /**En caso de que encuentre un resultado */
+        if (searchResult.Response === "True")
+        {
+          for (let i in results) {
+            let movie = <MovieFound movie={results[i]} fromFavorite="false"/>;
+            movieRows.push(movie);
+          }
+          this.setState({ rows: movieRows }, ()=>{
+            this.reviewFavorites();
+          });
         }
-        this.setState({ rows: movieRows });
-        this.reviewFavorites();
+        else if (stringSearch === "")
+        {
+          this.setState({ rows: [<div>...waiting for search</div>] });
+        }
+        else
+        {
+          this.setState({ rows: [<div>Result not found :C</div>] });
+        }
+        
       },
       error: (xhr, status, error) => {
         console.log('ERROR:', xhr, status, error);
@@ -51,11 +62,31 @@ class App extends Component {
 
 
   searchChangeHandle(e) {
-    console.log(e.target.value);
     const obj = this;
     const value = e.target.value;
     obj.performSearch(value);
   }
+
+  listFavorites(){
+
+    let listRows = [];
+    let arrayFavorite = localStorage.getItem('favorites');
+    this.setState({ rows: listRows });
+    if (arrayFavorite !== null && arrayFavorite !== "") {
+      arrayFavorite = JSON.parse(arrayFavorite);
+      for (let i in arrayFavorite) {
+        let movie = <MovieFound movie={arrayFavorite[i]} fromFavorite="true" />;
+        listRows.push(movie);
+      }
+    }
+
+    this.setState({ rows: listRows }, ()=>{
+      this.reviewFavorites();
+    });
+    
+  }
+
+
   render() {
 
     return (
@@ -67,7 +98,7 @@ class App extends Component {
               <tbody>
                 <tr>
                   <td>
-                    <img src={assets} className="App-logo" alt="logo" />
+                    <img src={assets} className="App-logo" alt="" />
                   </td>
                   <td width="8px"></td>
                   <td>
@@ -79,6 +110,7 @@ class App extends Component {
             </table>
             <br />
             <input placeholder="Enter movie name" id="input-search" onChange={this.searchChangeHandle.bind(this)}></input>
+            <button class="btn btn-default" onClick={this.listFavorites.bind(this)} > <img class="favoriteIcon" src={favoriteIMG} alt=""></img> Favoritos</button> 
           </center>
           <br />
           {this.state.rows}

@@ -80,9 +80,23 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+
+.notFavorite:hover {
+  cursor:pointer;
+ }
+
 .notFavorite{
   width: 30px;
   float: right;
+}
+
+.favoriteIcon:hover {
+  cursor:pointer;
+ }
+
+.favoriteIcon{
+  width: 20px;
+  padding-bottom: 5px;
 }
 
 #tableSearch{
