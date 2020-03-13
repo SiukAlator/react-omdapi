@@ -57,8 +57,9 @@ class MyModal extends Component {
         }
         let idImg = imdbID + '_img2';
         console.log(ratings);
-
-        const percentage = (ratings.split('/')[0] * 100)/ratings.split('/')[1];
+        let percentage = 0;
+        if (ratings != null)
+            percentage = (ratings.split('/')[0] * 100)/ratings.split('/')[1];
         return (
             <Modal
                 onRequestClose={onRequestClose}
