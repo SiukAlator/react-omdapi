@@ -17,6 +17,13 @@
   margin-left: 10px;
 }
 
+.graphicCircle{
+  margin-top: 20px;
+  float: left;
+  width: 60px !important;
+  margin-left: 20px;
+}
+
 .imageModal{
   float: left;
   height: 250px;
@@ -68,6 +75,7 @@
   float: right;
   margin-right: 20px;
   margin-bottom: 10px !important;
+  margin-top: 100px;
 }
 
 .App-header {

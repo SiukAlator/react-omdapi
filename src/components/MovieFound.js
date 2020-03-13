@@ -20,7 +20,7 @@ class MovieFound extends React.Component {
                 const genre = searchResult.Genre;
                 const director = searchResult.Director;
                 const plot = searchResult.Plot;
-                const ratings = searchResult.Ratings.length > 0 ? searchResult.Ratings[0].Values : null;
+                const ratings = searchResult.Ratings.length > 0 ? searchResult.Ratings[0].Value : null;
                 const poster = searchResult.Poster;
                 const imdbID = searchResult.imdbID;
                 ModalManager.open(<MyModal title={title} ano={ano}
@@ -84,7 +84,7 @@ class MovieFound extends React.Component {
                     <h3>{this.props.movie.Title}</h3>
                     <p>Year: {this.props.movie.Year}</p>
                     <p>
-                        <button class="btn btn-primary" onClick={this.viewDetail.bind(this)}>Ver</button>
+                        <button class="btn btn-primary" onClick={this.viewDetail.bind(this)}>See</button>
                     </p>
                 </div>
             </div>

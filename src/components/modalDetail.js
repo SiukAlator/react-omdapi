@@ -4,7 +4,10 @@ import notFound from '../assets/photo-video-solid.svg';
 import notFavorite from '../assets/star-regular.svg';
 import favoriteIMG from '../assets/star-solid.svg';
 import $ from 'jquery';
-
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
+import { easeQuadInOut } from "d3-ease";
+import AnimatedProgressProvider from "./AnimatedProgressProvider";
 
 class MyModal extends Component {
     favorite() {
@@ -53,19 +56,42 @@ class MyModal extends Component {
                 srcFavorite = favoriteIMG;
         }
         let idImg = imdbID + '_img2';
+        console.log(ratings);
+
+        const percentage = (ratings.split('/')[0] * 100)/ratings.split('/')[1];
         return (
             <Modal
                 onRequestClose={onRequestClose}
                 effect={Effect.Sign3D}>
                 <div class="modalDetail">
-                    <img onClick={this.favorite.bind(this)} id={idImg} src={srcFavorite} class="notFavorite" alt=""/>
-                    <img class={classImg} src={srcImg} alt=""/>
+
+                    <img onClick={this.favorite.bind(this)} id={idImg} src={srcFavorite} class="notFavorite" alt="" />
+                    <img class={classImg} src={srcImg} alt="" />
                     <h4>{title}</h4>
                     <h5><b>Year:</b> {ano}</h5>
                     <h5><b>Genre:</b> {genre}</h5>
                     <h5><b>Director:</b> {director}</h5>
                     <h5><b>Plot:</b> {plot}</h5>
-                    <button class="btn btn-primary closeModal"  onClick={ModalManager.close}>Cerrar</button>
+
+                    <button class="btn btn-primary closeModal" onClick={ModalManager.close}>Close</button>
+                    <div class="graphicCircle"><AnimatedProgressProvider
+                        valueStart={0}
+                        valueEnd={percentage}
+                        duration={1.4}
+                        easingFunction={easeQuadInOut}>
+                        {value => {
+                            const roundedValue = Math.round(value);
+                            return (
+                                <CircularProgressbar
+                                    value={value}
+                                    text={`${roundedValue}%`}
+                                    /* This is important to include, because if you're fully managing the
+                              animation yourself, you'll want to disable the CSS animation. */
+                                    styles={buildStyles({ pathTransition: "none" })}
+                                />
+                            );
+                        }}
+                    </AnimatedProgressProvider><br/><b><center>Ratings</center></b></div>
                 </div>
             </Modal>
         );

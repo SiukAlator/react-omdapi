@@ -110,7 +110,7 @@ class App extends Component {
             </table>
             <br />
             <input placeholder="Enter movie name" id="input-search" onChange={this.searchChangeHandle.bind(this)}></input>
-            <button class="btn btn-default" onClick={this.listFavorites.bind(this)} > <img class="favoriteIcon" src={favoriteIMG} alt=""></img> Favoritos</button> 
+            <button class="btn btn-default" onClick={this.listFavorites.bind(this)} > <img class="favoriteIcon" src={favoriteIMG} alt=""></img> Favorites</button> 
           </center>
           <br />
           {this.state.rows}
