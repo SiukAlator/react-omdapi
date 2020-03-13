@@ -5,6 +5,7 @@ import MovieFound from './components/MovieFound.js';
 import $ from 'jquery';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import favoriteIMG from './assets/star-solid.svg';
+import apiKey from './components/config.json';
 
 class App extends Component {
   constructor(props) {
@@ -27,7 +28,7 @@ class App extends Component {
   }
 
   performSearch(stringSearch) {
-    let urlApi = 'http://www.omdbapi.com/?&page=3&apikey=bd8f017b&s=' + stringSearch;
+    let urlApi = 'http://www.omdbapi.com/?&page=3&apikey='+apiKey.key+'&s=' + stringSearch;
     $.ajax({
       url: urlApi,
       success: (searchResult) => {

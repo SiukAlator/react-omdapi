@@ -5,12 +5,12 @@ import { ModalManager } from 'react-dynamic-modal';
 import notFound from '../assets/photo-video-solid.svg';
 import notFavorite from '../assets/star-regular.svg';
 import favoriteIMG from '../assets/star-solid.svg';
-
+import apiKey from './config.json';
 class MovieFound extends React.Component {
 
 
     viewDetail() {
-        let urlApi = 'http://www.omdbapi.com/?plot=full&apikey=bd8f017b&i=' + this.props.movie.imdbID;
+        let urlApi = 'http://www.omdbapi.com/?plot=full&apikey='+apiKey.key+'&i=' + this.props.movie.imdbID;
         $.ajax({
             url: urlApi,
             success: (searchResult) => {
